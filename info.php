@@ -85,6 +85,7 @@ include("sidebar.html");
                   <div class="card-body">
 
                     <h5>Esta aplicación web ha sido desarrollada por David de la Paz Morgado para la realización del TFG del Grado de Ingeniería Informática de UNIR.</h5>
+                    <h5>Acceso al repositorio en <a href="https://github.com/davidpm84/tfg">https://github.com/davidpm84/tfg</a></h5>
 
                   </div>
                 </div>
