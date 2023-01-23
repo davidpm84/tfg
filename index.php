@@ -429,9 +429,13 @@ while($fila4= mysqli_fetch_array($consulta)){
                                   $nombre=$fila3['nombre'];
                                   $web=$fila3['web'];
 
-                                  $sentencia_infor = "select * from informes where id_cliente=".$id." limit 6";  
+                                  $sentencia_infor = "select * from informes where id_cliente=".$id;  
                                   $consulta_infor = mysqli_query($conexion, $sentencia_infor) or die("Error de conexión");
-                                  $cantidad_activos_informe=0;
+
+                                  $sentencia_activos = "select * from activos where cliente=".$id;  
+                                  $consulta_activos = mysqli_query($conexion, $sentencia_activos) or die("Error de conexión");
+
+                                  $cantidad_activos=0;
                                   $cantidad_informes = 0;
 
                                   while($fila_infor = mysqli_fetch_array($consulta_infor)){
@@ -440,6 +444,13 @@ while($fila4= mysqli_fetch_array($consulta)){
                                     $cantidad_activos_informe = count($arr_activos)-1;
                                     $cantidad_informes ++;
                                   }
+
+                                  while($fila_activos= mysqli_fetch_array($consulta_activos)){
+         
+                                    $cantidad_activos ++;
+                                  }
+
+
                                   ?>
 
                                   <tr>
@@ -447,7 +458,7 @@ while($fila4= mysqli_fetch_array($consulta)){
                                   <td><?php echo $nombre; ?></td>
                                   <td><?php echo $web; ?></td>
                                   <td><?php echo $cantidad_informes; ?></td>
-                                  <td><?php echo $cantidad_activos_informe; ?></td>
+                                  <td><?php echo $cantidad_activos; ?></td>
                                 </tr>
                                 <?php
    
