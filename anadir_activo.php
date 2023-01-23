@@ -145,11 +145,26 @@ include("sidebar.html");
   </main><!-- End #main -->
 
   <?php
+function sanitizar_input($data) {
+  $data = str_replace("'", '', $data);
+  $data = str_replace('"', '', $data);
+  $data = str_replace("<", '', $data);
+  $data = str_replace(">", '', $data);
+  $data = str_replace("(", '', $data);
+  $data = str_replace(")", '', $data);
+  $data = str_replace("/", '', $data);
+  $data = str_replace("“", '', $data);
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+
+  return $data;
+}
 
 if (isset($_POST['submit'])){
   $tipo = $_POST['tipo'];
   $cliente = $_POST['empresa'];
-  $hostname = $_POST['hostname'];
+  $hostname =sanitizar_input($_POST['hostname']);
   $ip = $_POST['ip'];
   $descripcion = $_POST['descripcion'];
   $so = $_POST['so'];
@@ -162,6 +177,7 @@ if (isset($_POST['submit'])){
   $consulta = mysqli_query($conexion, $sentencia)or die("Error de la consulta");
 
   if (mysqli_affected_rows($conexion)!=0) {
+
     echo '<script type="text/JavaScript"> location.href="listado_activos.php" </script>';
 
 }
