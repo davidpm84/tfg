@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 22-01-2023 a las 10:50:36
+-- Tiempo de generación: 30-01-2023 a las 21:22:20
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 8.0.1
 
@@ -97,6 +97,28 @@ INSERT INTO `informes` (`id`, `nombre_informe`, `id_cliente`, `activos`, `estado
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `usuario` text NOT NULL,
+  `password` text NOT NULL,
+  `nombre` text NOT NULL,
+  `imagen` text,
+  `rol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `imagen`, `rol`) VALUES
+(1, 'david', 'ZGF2aWQ=', 'D. de la Paz', 'http://localhost/assets/img/profile.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `vulnerabilidades`
 --
 
@@ -146,6 +168,12 @@ ALTER TABLE `informes`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `vulnerabilidades`
 --
 ALTER TABLE `vulnerabilidades`
@@ -173,6 +201,12 @@ ALTER TABLE `empresas`
 --
 ALTER TABLE `informes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `vulnerabilidades`
