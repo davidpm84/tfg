@@ -48,7 +48,7 @@ include("conexion.php");
 
 <?php
 
-include("header.html");
+include("header.php");
 include("sidebar.html");
 ?>
 

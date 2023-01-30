@@ -12,6 +12,8 @@ if (empty($id_cliente)) {
 }
 
 
+
+
 ?>
 <html lang="en">
 
@@ -55,7 +57,7 @@ if (empty($id_cliente)) {
 
 <?php
 
-include("header.html");
+include("header.php");
 include("sidebar.html");
 ?>
 

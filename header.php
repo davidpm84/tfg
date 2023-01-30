@@ -24,13 +24,35 @@
    
 
    
+<?php
+session_start();
+   
+// Controlo si el usuario ya está logueado en el sistema.
+if(empty($_SESSION['ses_username'])){
+  // Si no está logueado lo redireccion a la página de login.
+  header("HTTP/1.1 302 Moved Temporarily"); 
+  header("Location: login.php"); 
+}
 
+  $sentencia = "select * from usuarios order by id";    
+  $consulta = mysqli_query($conexion, $sentencia) or die("Error de conexión en tabla usuarios");
+
+  //vamos a recorrer la consulta y guardar los datos 
+  while($ses= mysqli_fetch_array($consulta)){
+      if ($_SESSION['ses_username'] == $ses['usuario']){ 
+        $ses_usuario=$ses['usuario'];
+        $ses_nombre=$ses['nombre']; 
+        $ses_rol=$ses['rol']; 
+      }
+  }
+
+?>
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="http://localhost/assets/img/profile.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">D. de la Paz</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $ses_nombre;?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -51,12 +73,27 @@
                 <span>información sobre este programa</span>
               </a>
             </li>
+
+
+            <?php
+            if ($ses_rol=='1'){
+
+            
+            ?>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost/listado_usuarios.php">
+                <i class="bi bi-person"></i>
+                <span>Gestión de usuarios</span>
+              </a>
+            </li>
+            <?php
+              }
+            ?>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost/logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar Sesión</span>
               </a>

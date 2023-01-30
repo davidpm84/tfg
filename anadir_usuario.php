@@ -8,7 +8,7 @@ include("conexion.php");
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Añadir Informe</title>
+  <title>Añadir Usuario</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -56,11 +56,11 @@ include("sidebar.html");
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Añadir Informe</h1>
+      <h1>Añadir Usuario</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active">Añadir Informe</li>
+            <li class="breadcrumb-item active">Añadir Usuario</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -71,41 +71,36 @@ include("sidebar.html");
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Añadir Informe</h5>
+              <h5 class="card-title">Añadir Usuario</h5>
 
               <!-- Multi Columns Form -->
               <form class="row g-3" form action="" method="post">
                 <div class="col-md-6">
-                  <label for="nombre" class="form-label">Nombre del Informe</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre">
+                  <label for="username" class="form-label">Nombre del usuario</label>
+                  <input type="text" class="form-control" id="username" name="username">
                 </div>
                 <div class="col-md-6">
-                  <label for="cliente" class="form-label">Cliente</label>
-                  <select class="form-control" id="cliente" name="cliente" required>
-                                <option value=""></option>
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="text" class="form-control" id="password" name="password">
+                </div>
 
-                                <?php 
-                        
-                                  $sentencia_empresa = "select * from empresas";
-                                  $consulta_empresa = mysqli_query($conexion, $sentencia_empresa) or die("Error de Consulta empresas");
-
-                                  //vamos a recorrer la consulta y guardar los datos
-                                  while($fila= mysqli_fetch_array($consulta_empresa)){
-                                      $id=$fila['id'];
-                                      $nombre=$fila['nombre'];
-                                      
-                                      echo "<option value=".$id.">".$nombre."</option>";
-                                  }
-                              ?>
-                              </select>                </div>
                 <div class="col-md-6">
-                  <label for="fecha" class="form-label">Fecha</label>
-                  <input type="date" class="form-control" id="fecha" name="fecha">
+                  <label for="nombre" class="form-label">Nombre Completo</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="rol" class="form-label">Rol</label>
+                  <select id="rol" class="form-select" name="rol">
+                    <option selected></option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Usuario</option>
+                  </select>                
                 </div>
                
                 
                 <div class="text-center">
-                  <button type="submit" name="submit" class="btn btn-primary">Guardar</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Crear usuario</button>
 
                   <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
@@ -122,19 +117,20 @@ include("sidebar.html");
   </main><!-- End #main -->
 
   <?php
+  
 // obtener valores del post y generar consulta SQL
 if (isset($_POST['submit'])){
   $nombre = $_POST['nombre'];
-  $fecha = $_POST['fecha'];
-  $cliente = $_POST['cliente'];
+  $usuario = $_POST['username'];
+  $password = base64_encode($_POST['password']);
+  $rol = $_POST['rol'];
 
-  $sentencia = "INSERT INTO `informes`(`nombre_informe`, `id_cliente`, `fecha`, `estado`)";
-  $sentencia .=" VALUES ('$nombre','$cliente', '$fecha', 'En proceso')";
-
+  $sentencia = "INSERT INTO `usuarios`(`usuario`, `password`, `nombre`, `rol`)";
+  $sentencia .=" VALUES ('$usuario', '$password', '$nombre', '$rol')";
   $consulta = mysqli_query($conexion, $sentencia)or die("Error de la consulta");
 
   if (mysqli_affected_rows($conexion)!=0) {
-    echo '<script type="text/JavaScript"> location.href="listado_informes.php" </script>';
+    echo '<script type="text/JavaScript"> location.href="listado_usuarios.php" </script>';
 
   }
 }

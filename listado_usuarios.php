@@ -10,7 +10,7 @@ include("conexion.php");
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Listado de informes</title>
+  <title>Listado de usuarios</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -35,7 +35,6 @@ include("conexion.php");
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.4.1
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -50,6 +49,8 @@ include("conexion.php");
 
 include("header.php");
 include("sidebar.html");
+
+
 ?>
 
   
@@ -57,18 +58,17 @@ include("sidebar.html");
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Listado de Informes</h1>
+      <h1>Listado de usuarios</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-          <li class="breadcrumb-item active">Informes</li>
+          <li class="breadcrumb-item active">Usuarios</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <div align="right">    <a href="anadir_informe.php"><button type="button" class="btn btn-primary">Añadir Informe</button></a>
+    <div align="right">    <a href="anadir_usuario.php"><button type="button" class="btn btn-primary">Añadir Usuario</button></a>
 
    </div><br>
-
    
 
 
@@ -77,68 +77,50 @@ include("sidebar.html");
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listado de Informes</h5>
+              <h5 class="card-title">Listado de usuarios</h5>
 
               <!-- Default Table -->
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th scope="col"><center>#</center></th>
-                    <th scope="col"><center>Nombre</center></th>
-                    <th scope="col"><center>Cliente</center></th>
-                    <th scope="col"><center>Fecha</center></th>
-                    <th scope="col"><center>Estado</center></th>
-                    <th scope="col"><center>Editar</center></th>
-                    <th scope="col"><center>Eliminar</center></th>
-                    <th scope="col"><center>Imprimir</center></th>
+                    <th scope="col">#</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
 
                   </tr>
                 </thead>
                 <tbody>
 
-                  <?php
+                <?php
 
-                    $sentencia = "select * from informes order by id";    
-                    $consulta = mysqli_query($conexion, $sentencia) or die("Error de conexión en tabla informes");
-
-                    //vamos a recorrer la consulta y guardar los datos 
-                    while($fila= mysqli_fetch_array($consulta)){
-                            $id=$fila['id'];
-                            $nombre_doc=$fila['nombre_informe'];
-                            $id_empresa_auditada=$fila['id_cliente'];
-                            $activos=$fila['activos'];
-                            $estado=$fila['estado'];
-                            $fecha=$fila['fecha'];
-
-                            $sentencia_empresa = "select * from empresas where id=".$id_empresa_auditada;    
-                            $consulta_empresa = mysqli_query($conexion, $sentencia_empresa) or die("Error de conexión en tabla informes");
-
-                            while($fila_empresa= mysqli_fetch_array($consulta_empresa)){
-                              $nombre_empresa=$fila_empresa['nombre'];
-                            }
-
-                            if($estado == "Terminado"){
-                                $estado = '<span class="badge bg-success">Finalizado</span>';
-                                $imprimir = '<center><i class="bi bi-printer"></i></center>';
-
-                            }else if ($estado == "En proceso"){
-                              $estado = '<span class="badge bg-warning">En proceso</span>';
-                              $imprimir = '<span class="badge bg-success"></span>';
-
-                            }
-                    ?>
+                $sentencia = "select * from usuarios order by id";    
+                $consulta = mysqli_query($conexion, $sentencia) or die("Error de conexión en tabla empresas");
+            
+                //vamos a recorrer la consulta y guardar los datos 
+                while($fila= mysqli_fetch_array($consulta)){
+                        $id=$fila['id'];
+                        $usuario=$fila['usuario'];
+                        $nombre=$fila['nombre'];
+                        $rol=$fila['rol'];
+                        if($rol == 1){
+                          $rol = 'Administrador';
+                        }else if ($rol == 2){
+                          $rol = 'Usuario';
+                        }
+                 
+                ?>
 
                   <tr>
-                    <th scope="row"><center><?php echo $id ?></center></th>
-                    <td><center><?php echo $nombre_doc ?></center></td>
-                    <td><center><?php echo $nombre_empresa ?></center></td>
-                    <td><center><?php echo $fecha ?></center></td>
-                    <td><center><?php echo $estado ?></center></td>
-
-                    <td><center><a href="editar_informe.php?id=<?php echo $id ?>"><i class="mdi mdi-eye" style="font-size:20px"></i></a></center></td>
-                    <td><center><a href="eliminar_informe.php?id=<?php echo $id ?>"><i class="mdi mdi-close-circle-outline" style="color:red; font-size:20px"></i></a></center></td>
-                    <td><a href="wordphp/imprimir_informe.php?id=<?php echo $id ?>"><?php echo $imprimir ?></a></td>
-   
+                    <th scope="row"><?php echo $id ?></th>
+                    <td><?php echo $usuario ?></td>
+                    <td><?php echo $nombre ?></td>
+                    <td><?php echo $rol ?></td>
+                   
+                    <td><a href="editar_usuario.php?id=<?php echo $id ?>"><i class="mdi mdi-eye" style="font-size:20px"></i></a></td>
+                    <td><a href="eliminar_usuario.php?id=<?php echo $id ?>"><i class="mdi mdi-close-circle-outline" style="color:red; font-size:20px"></i></a></td>
                   </tr>
                   <?php
                 }
@@ -156,8 +138,7 @@ include("sidebar.html");
     </section>
 
   </main><!-- End #main -->
-
-
+ 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

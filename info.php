@@ -50,7 +50,7 @@ $id_url = $urlArray[1];
 <body>
 <?php
 
-include("header.html");
+include("header.php");
 include("sidebar.html");
 ?>
 

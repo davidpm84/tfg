@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <?php
+
 include("conexion.php");
+
+$url = $_SERVER["REQUEST_URI"];
+$urlArray = explode('=', $url);
+$id_url = $urlArray[1];
+
 ?>
 <html lang="en">
 
@@ -8,7 +14,7 @@ include("conexion.php");
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Añadir Informe</title>
+  <title>Eliminar Usuario</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -56,11 +62,11 @@ include("sidebar.html");
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Añadir Informe</h1>
+      <h1>Eliminar Usuario</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active">Añadir Informe</li>
+          <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+            <li class="breadcrumb-item active">Eliminar Usuario</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -71,46 +77,23 @@ include("sidebar.html");
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Añadir Informe</h5>
-
+              <h5 class="card-title">Eliminar Usuario</h5>
+              <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <?php
+                      $sentencia = "DELETE FROM `usuarios` WHERE id=".$id_url;    
+                      $consulta = mysqli_query($conexion, $sentencia) or die("Error de Consulta");
+                    ?>
+                    <h1>Usuario Eliminado</h1>
+                    <a class="nav-link btn btn-info col-lg-1 col-12 create-new-button" aria-expanded="false" href="listado_usuarios.php">Volver</a>
+                  </div>
+                </div>
+              </div>
+            </div>
               <!-- Multi Columns Form -->
-              <form class="row g-3" form action="" method="post">
-                <div class="col-md-6">
-                  <label for="nombre" class="form-label">Nombre del Informe</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre">
-                </div>
-                <div class="col-md-6">
-                  <label for="cliente" class="form-label">Cliente</label>
-                  <select class="form-control" id="cliente" name="cliente" required>
-                                <option value=""></option>
-
-                                <?php 
-                        
-                                  $sentencia_empresa = "select * from empresas";
-                                  $consulta_empresa = mysqli_query($conexion, $sentencia_empresa) or die("Error de Consulta empresas");
-
-                                  //vamos a recorrer la consulta y guardar los datos
-                                  while($fila= mysqli_fetch_array($consulta_empresa)){
-                                      $id=$fila['id'];
-                                      $nombre=$fila['nombre'];
-                                      
-                                      echo "<option value=".$id.">".$nombre."</option>";
-                                  }
-                              ?>
-                              </select>                </div>
-                <div class="col-md-6">
-                  <label for="fecha" class="form-label">Fecha</label>
-                  <input type="date" class="form-control" id="fecha" name="fecha">
-                </div>
-               
-                
-                <div class="text-center">
-                  <button type="submit" name="submit" class="btn btn-primary">Guardar</button>
-
-                  <button type="reset" class="btn btn-secondary">Reset</button>
-                </div>
-              </form><!-- End Multi Columns Form -->
-
+              
             </div>
           </div>
 
@@ -121,25 +104,7 @@ include("sidebar.html");
 
   </main><!-- End #main -->
 
-  <?php
-// obtener valores del post y generar consulta SQL
-if (isset($_POST['submit'])){
-  $nombre = $_POST['nombre'];
-  $fecha = $_POST['fecha'];
-  $cliente = $_POST['cliente'];
-
-  $sentencia = "INSERT INTO `informes`(`nombre_informe`, `id_cliente`, `fecha`, `estado`)";
-  $sentencia .=" VALUES ('$nombre','$cliente', '$fecha', 'En proceso')";
-
-  $consulta = mysqli_query($conexion, $sentencia)or die("Error de la consulta");
-
-  if (mysqli_affected_rows($conexion)!=0) {
-    echo '<script type="text/JavaScript"> location.href="listado_informes.php" </script>';
-
-  }
-}
-?>
-
+  
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->

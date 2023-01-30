@@ -47,7 +47,7 @@ include("conexion.php");
 
 <?php
 
-include("header.html");
+include("header.php");
 include("sidebar.html");
 
 
@@ -116,6 +116,7 @@ include("sidebar.html");
                     <td><?php echo $web ?></td>
                    
                     <td><a href="editar_cliente.php?id=<?php echo $id ?>"><i class="mdi mdi-eye" style="font-size:20px"></i></a></td>
+                 
                     <td><a href="eliminar_cliente.php?id=<?php echo $id ?>"><i class="mdi mdi-close-circle-outline" style="color:red; font-size:20px"></i></a></td>
                   </tr>
                   <?php
