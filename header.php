@@ -15,11 +15,7 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
+      
 
    
 
@@ -58,7 +54,14 @@ if(empty($_SESSION['ses_username'])){
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>David de la Paz Morgado</h6>
-              <span>TFG UNIR</span>
+              <?php
+              if ($ses_rol=='1'){
+                echo "<span>Rol: Administrador</span>";
+              } else {
+                echo "<span>Rol: Usuario</span>";
+
+              }
+              ?>
             </li>
             <li>
               <hr class="dropdown-divider">
