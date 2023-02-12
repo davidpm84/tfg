@@ -74,7 +74,7 @@ include("sidebar.html");
               <h5 class="card-title">Añadir Usuario</h5>
 
               <!-- Multi Columns Form -->
-              <form class="row g-3" form action="" method="post">
+              <form class="row g-3" form action="" method="post" enctype="multipart/form-data">
                 <div class="col-md-6">
                   <label for="username" class="form-label">Nombre del usuario</label>
                   <input type="text" class="form-control" id="username" name="username">
@@ -97,7 +97,12 @@ include("sidebar.html");
                     <option value="2">Usuario</option>
                   </select>                
                 </div>
-               
+                <div class="col-md-6">
+                  <label for="file" class="form-label">Imagen</label>
+                  <input type="file" name="file" id="file">
+                  </select>                
+                </div>
+
                 
                 <div class="text-center">
                   <button type="submit" name="submit" class="btn btn-primary">Crear usuario</button>
@@ -117,22 +122,74 @@ include("sidebar.html");
   </main><!-- End #main -->
 
   <?php
-  
+$target_dir = "assets/img/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
 // obtener valores del post y generar consulta SQL
 if (isset($_POST['submit'])){
-  $nombre = $_POST['nombre'];
-  $usuario = $_POST['username'];
-  $password = base64_encode($_POST['password']);
-  $rol = $_POST['rol'];
 
-  $sentencia = "INSERT INTO `usuarios`(`usuario`, `password`, `nombre`, `rol`)";
-  $sentencia .=" VALUES ('$usuario', '$password', '$nombre', '$rol')";
-  $consulta = mysqli_query($conexion, $sentencia)or die("Error de la consulta");
 
-  if (mysqli_affected_rows($conexion)!=0) {
-    echo '<script type="text/JavaScript"> location.href="listado_usuarios.php" </script>';
+  $check = getimagesize($_FILES["file"]["tmp_name"]);
 
+  if($check !== false) {
+    $uploadOk = 1;
+  } else {
+    $uploadOk = 0;
   }
+
+
+// Check if file already exists
+if (file_exists($target_file)) {
+  $uploadOk = 0;
+}
+
+// Check file size
+if ($_FILES["fileToUpload"]["size"] > 500000) {
+  $uploadOk = 0;
+}
+
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+  $uploadOk = 0;
+}
+
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+  echo "<script type='text/javascript'>alert('El fichero no cumple los requisitos (Fichero tipo imagen jpg o png y que no supere 500KB)');</script>";
+  
+  // if everything is ok, try to upload file
+} else {
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+
+    $nombre = $_POST['nombre'];
+    $usuario = $_POST['username'];
+    $password = base64_encode($_POST['password']);
+    $rol = $_POST['rol'];
+  
+    $sentencia = "INSERT INTO `usuarios`(`usuario`, `password`, `nombre`, `rol`, `imagen`)";
+    $sentencia .=" VALUES ('$usuario', '$password', '$nombre', '$rol', '$target_file')";
+    $consulta = mysqli_query($conexion, $sentencia)or die("Error de la consulta");
+
+    if (mysqli_affected_rows($conexion)!=0) {
+      echo '<script type="text/JavaScript"> location.href="listado_usuarios.php" </script>';
+  
+    }
+  } else {
+    echo "<script type='text/javascript'>alert('Ha habido un problema al subir el fichero');</script>";
+  }
+
+
+
+}
+
+
+
+
+
+
 }
 ?>
 

@@ -39,6 +39,8 @@ if(empty($_SESSION['ses_username'])){
         $ses_usuario=$ses['usuario'];
         $ses_nombre=$ses['nombre']; 
         $ses_rol=$ses['rol']; 
+        $ses_imagen=$ses['imagen']; 
+
       }
   }
 
@@ -47,7 +49,7 @@ if(empty($_SESSION['ses_username'])){
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="http://localhost/assets/img/profile.jpg" alt="Profile" class="rounded-circle">
+            <img src="http://localhost/<?php echo $ses_imagen; ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $ses_nombre;?></span>
           </a><!-- End Profile Iamge Icon -->
 
