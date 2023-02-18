@@ -55,7 +55,7 @@ if(empty($_SESSION['ses_username'])){
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>David de la Paz Morgado</h6>
+              <h6><?php echo $ses_usuario; ?></h6>
               <?php
               if ($ses_rol=='1'){
                 echo "<span>Rol: Administrador</span>";
