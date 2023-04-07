@@ -114,7 +114,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `imagen`, `rol`) VALUES
-(1, 'david', 'ZGF2aWQ=', 'D. de la Paz', 'http://localhost/assets/img/profile.jpg', 1);
+(1, 'david', 'ZGF2aWQ=', 'D. de la Paz', 'http://localhost/assets/img/profile.jpg', 1),
 (2, 'demo', 'ZGVtbw==', 'demo', 'http://localhost/assets/img/profile.jpg', 1);
 -- --------------------------------------------------------
 
