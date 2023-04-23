@@ -123,9 +123,11 @@ $fila_activos=$consulta3->fetch_assoc();
 $activos=$fila_activos['activos'];
   $arr_activos = explode(",",trim($activos));
   $i = 0;
-  while($i < count($arr_activos))
+
+  while($i < count($arr_activos)-1)
   {
-    $sentencia4 = "select * from activos where id=".$i;     
+
+    $sentencia4 = "select * from activos where id=".$arr_activos[$i];     
     $consulta4 = mysqli_query($conexion, $sentencia4) or die("Error de conexión en tabla informes");
 
     //vamos a recorrer la consulta y guardar los datos 
@@ -149,9 +151,9 @@ $activos=$fila_activos['activos'];
 
   $i = 0;
   $todas_vulnerabilidades="";
-  while($i < count($arr_activos))
+  while($i < count($arr_activos)-1)
   {
-    $sentencia4 = "select * from activos where id=".$i;     
+    $sentencia4 = "select * from activos where id=".$arr_activos[$i];     
     $consulta4 = mysqli_query($conexion, $sentencia4) or die("Error de conexión en tabla informes");
     
 
